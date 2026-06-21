@@ -160,74 +160,20 @@
                 searchQuery: '',
                 selectedAmenities: [],
                 priceFilter: '',
-                spaces: [
-                    {
-                        id: 1,
-                        name: 'The Hive Downtown',
-                        neighborhood: 'Downtown / Loop',
-                        image: 'https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&w=600&q=80',
-                        rating: 4.8,
-                        reviews: 124,
-                        priceRange: '$$',
-                        startingPrice: 299,
-                        amenities: ['24/7 Access', 'Meeting Rooms', 'Coffee', 'Phone Booths']
-                    },
-                    {
-                        id: 2,
-                        name: 'LoftWorks West Loop',
-                        neighborhood: 'West Loop',
-                        image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
-                        rating: 4.9,
-                        reviews: 89,
-                        priceRange: '$$$',
-                        startingPrice: 450,
-                        amenities: ['24/7 Access', 'Meeting Rooms', 'Coffee', 'Events', 'Showers']
-                    },
-                    {
-                        id: 3,
-                        name: 'Station 18',
-                        neighborhood: 'Wicker Park',
-                        image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32b7?auto=format&fit=crop&w=600&q=80',
-                        rating: 4.6,
-                        reviews: 56,
-                        priceRange: '$',
-                        startingPrice: 199,
-                        amenities: ['Coffee', 'Outdoor Space', 'Bike Storage']
-                    },
-                    {
-                        id: 4,
-                        name: 'Nexus River North',
-                        neighborhood: 'River North',
-                        image: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?auto=format&fit=crop&w=600&q=80',
-                        rating: 4.7,
-                        reviews: 210,
-                        priceRange: '$$$',
-                        startingPrice: 500,
-                        amenities: ['24/7 Access', 'Meeting Rooms', 'Coffee', 'Phone Booths', 'Gym']
-                    },
-                    {
-                        id: 5,
-                        name: 'Create & Co',
-                        neighborhood: 'Logan Square',
-                        image: 'https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80',
-                        rating: 4.9,
-                        reviews: 142,
-                        priceRange: '$$',
-                        startingPrice: 250,
-                        amenities: ['Coffee', 'Phone Booths', 'Podcast Studio', 'Events']
-                    },
-                    {
-                        id: 6,
-                        name: 'Basecamp South Loop',
-                        neighborhood: 'South Loop',
-                        image: 'https://images.unsplash.com/photo-1572025442646-866d16c84a54?auto=format&fit=crop&w=600&q=80',
-                        rating: 4.5,
-                        reviews: 78,
-                        priceRange: '$',
-                        startingPrice: 150,
-                        amenities: ['Meeting Rooms', 'Coffee', 'Parking']
-                    }
-                ],
+                spaces: [],
+                isLoading: true,
+                init() {
+                    fetch('./spaces.json')
+                        .then(res => res.json())
+                        .then(data => {
+                            this.spaces = data;
+                            this.isLoading = false;
+                        })
+                        .catch(err => {
+                            console.error('Error loading spaces:', err);
+                            this.isLoading = false;
+                        });
+                },
                 get filteredSpaces() {
                     return this.spaces.filter(space => {
                         // Search filter
