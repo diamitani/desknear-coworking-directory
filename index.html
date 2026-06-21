@@ -3,166 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeskNear - Coworking Space Directory</title>
+    <title>DeskNear | Premium Coworking & Private Offices</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        [x-cloak] { display: none !important; }
+    </style>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: '#2563eb',
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            950: '#042f2e'
+                        },
+                        surface: '#f8fafc',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased" x-data="coworkingDirectory()">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+<body class="bg-surface text-slate-800 antialiased" x-data="directoryApp()">
+    
+    <!-- Navigation (Glassmorphism) -->
+    <nav class="glass-nav fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <i class="fa-solid fa-layer-group text-brand text-2xl"></i>
-                    <span class="font-bold text-xl tracking-tight">DeskNear</span>
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-layer-group text-white text-xl"></i>
+                    </div>
+                    <span class="font-extrabold text-2xl tracking-tight text-slate-900">DeskNear<span class="text-brand-500">.</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Locations</a>
+                    <a href="#" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">For Enterprise</a>
+                    <a href="#" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Pricing</a>
                 </div>
                 <div>
-                    <button class="bg-brand text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition">List Your Space</button>
+                    <button class="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-md shadow-slate-900/20">
+                        List Your Space
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="bg-brand py-16 px-4 sm:px-6 lg:px-8 text-center text-white">
-        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-4">Find Your Perfect Workspace</h1>
-        <p class="max-w-xl mx-auto text-xl text-blue-100 mb-8">Discover top-rated coworking spaces, private offices, and meeting rooms near you.</p>
-        
-        <!-- Search Bar -->
-        <div class="max-w-2xl mx-auto bg-white rounded-full p-2 flex shadow-lg">
-            <div class="flex-grow flex items-center pl-4">
-                <i class="fa-solid fa-location-dot text-gray-400 mr-2"></i>
-                <input type="text" x-model="searchQuery" placeholder="Search by city, neighborhood, or space name..." class="w-full py-2 px-2 text-gray-700 focus:outline-none rounded-full">
+    <!-- Premium Hero Section -->
+    <div class="hero-gradient pt-32 pb-24 px-4 sm:px-6 lg:px-8 text-center text-white relative overflow-hidden">
+        <!-- Abstract background elements -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full opacity-20 pointer-events-none">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+            <div class="absolute top-10 right-10 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-semibold tracking-wide text-brand-100 mb-6 uppercase">
+                The Global Coworking Network
+            </span>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                Design your best work. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-100 to-brand-500">Anywhere.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-medium">
+                Discover the world's most inspiring workspaces, curated for founders, creators, and teams scaling to billions.
+            </p>
+            
+            <!-- Sleek Search Bar -->
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl p-2 flex shadow-2xl ring-1 ring-slate-900/5">
+                <div class="flex-grow flex items-center pl-5">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 text-lg"></i>
+                    <input type="text" x-model="searchQuery" placeholder="Search cities, spaces, or neighborhoods..." class="w-full py-3 px-4 text-slate-800 text-lg focus:outline-none bg-transparent placeholder-slate-400 font-medium">
+                </div>
+                <button class="bg-brand-500 text-white px-8 py-3 rounded-xl font-bold hover:bg-brand-600 transition shadow-lg shadow-brand-500/30 flex items-center gap-2">
+                    Search
+                </button>
             </div>
-            <button class="bg-gray-900 text-white px-6 py-2 rounded-full font-medium hover:bg-gray-800 transition">Search</button>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-8">
+    <!-- Main Content App -->
+    <main class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col lg:flex-row gap-10">
         
-        <!-- Filters Sidebar -->
-        <aside class="w-full md:w-64 flex-shrink-0">
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold text-lg mb-4">Filters</h3>
+        <!-- Filters Sidebar (Sticky) -->
+        <aside class="w-full lg:w-72 flex-shrink-0">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 sticky top-28">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-lg text-slate-900">Filters</h3>
+                    <button @click="resetFilters()" x-show="hasActiveFilters" x-cloak class="text-xs font-semibold text-brand-600 hover:text-brand-800">Clear All</button>
+                </div>
                 
-                <div class="mb-6">
-                    <h4 class="font-medium text-sm text-gray-500 mb-2 uppercase tracking-wider">Amenities</h4>
-                    <div class="space-y-2">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                            <input type="checkbox" value="24/7 Access" x-model="selectedAmenities" class="rounded text-brand focus:ring-brand">
-                            24/7 Access
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                            <input type="checkbox" value="Meeting Rooms" x-model="selectedAmenities" class="rounded text-brand focus:ring-brand">
-                            Meeting Rooms
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                            <input type="checkbox" value="Coffee" x-model="selectedAmenities" class="rounded text-brand focus:ring-brand">
-                            Free Coffee
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                            <input type="checkbox" value="Phone Booths" x-model="selectedAmenities" class="rounded text-brand focus:ring-brand">
-                            Phone Booths
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                            <input type="checkbox" value="Parking" x-model="selectedAmenities" class="rounded text-brand focus:ring-brand">
-                            Parking
-                        </label>
+                <div class="mb-8">
+                    <h4 class="text-xs font-bold text-slate-400 mb-4 uppercase tracking-wider">Premium Amenities</h4>
+                    <div class="space-y-3">
+                        <template x-for="amenity in availableAmenities" :key="amenity">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" :value="amenity" x-model="selectedAmenities" class="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded bg-white checked:bg-slate-900 checked:border-slate-900 transition focus:outline-none focus:ring-2 focus:ring-slate-900/20">
+                                    <i class="fa-solid fa-check absolute text-white text-[10px] left-[5px] top-[5px] opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-600 group-hover:text-slate-900 transition" x-text="amenity"></span>
+                            </label>
+                        </template>
                     </div>
                 </div>
 
                 <div>
-                    <h4 class="font-medium text-sm text-gray-500 mb-2 uppercase tracking-wider">Price Rating</h4>
-                    <div class="flex gap-2">
-                        <button @click="priceFilter = priceFilter === '$' ? '' : '$'" :class="{'bg-brand text-white border-brand': priceFilter === '$', 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50': priceFilter !== '$'}" class="px-3 py-1 border rounded-md text-sm transition">$</button>
-                        <button @click="priceFilter = priceFilter === '$$' ? '' : '$$'" :class="{'bg-brand text-white border-brand': priceFilter === '$$', 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50': priceFilter !== '$$'}" class="px-3 py-1 border rounded-md text-sm transition">$$</button>
-                        <button @click="priceFilter = priceFilter === '$$$' ? '' : '$$$'" :class="{'bg-brand text-white border-brand': priceFilter === '$$$', 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50': priceFilter !== '$$$'}" class="px-3 py-1 border rounded-md text-sm transition">$$$</button>
+                    <h4 class="text-xs font-bold text-slate-400 mb-4 uppercase tracking-wider">Pricing Tier</h4>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button @click="priceFilter = priceFilter === '$' ? '' : '$'" :class="{'bg-slate-900 text-white border-slate-900 shadow-md': priceFilter === '$', 'bg-white text-slate-600 border-slate-200 hover:border-slate-400': priceFilter !== '$'}" class="py-2.5 border rounded-xl text-sm font-bold transition">$$</button>
+                        <button @click="priceFilter = priceFilter === '$$' ? '' : '$$'" :class="{'bg-slate-900 text-white border-slate-900 shadow-md': priceFilter === '$$', 'bg-white text-slate-600 border-slate-200 hover:border-slate-400': priceFilter !== '$$'}" class="py-2.5 border rounded-xl text-sm font-bold transition">$$$</button>
+                        <button @click="priceFilter = priceFilter === '$$$' ? '' : '$$$'" :class="{'bg-slate-900 text-white border-slate-900 shadow-md': priceFilter === '$$$', 'bg-white text-slate-600 border-slate-200 hover:border-slate-400': priceFilter !== '$$$'}" class="py-2.5 border rounded-xl text-sm font-bold transition">$$$$</button>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Results Grid -->
-        <div class="flex-grow">
-            <div class="mb-6 flex justify-between items-center">
-                <h2 class="text-xl font-bold"><span x-text="filteredSpaces.length"></span> Spaces Found</h2>
+        <!-- Results Section -->
+        <div class="flex-grow min-w-0">
+            <!-- Header & Loading State -->
+            <div class="mb-8 flex justify-between items-end">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Curated Spaces</h2>
+                    <p class="text-slate-500 text-sm mt-1 font-medium" x-show="!isLoading" x-cloak>
+                        Showing <span class="text-slate-900 font-bold" x-text="Math.min((currentPage - 1) * itemsPerPage + 1, filteredSpaces.length)"></span> - 
+                        <span class="text-slate-900 font-bold" x-text="Math.min(currentPage * itemsPerPage, filteredSpaces.length)"></span> of 
+                        <span class="text-brand-600 font-bold" x-text="filteredSpaces.length"></span> locations
+                    </p>
+                </div>
+                <div x-show="isLoading" class="flex items-center gap-2 text-slate-400 text-sm font-medium">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> Loading directory...
+                </div>
             </div>
 
             <!-- Empty State -->
-            <div x-show="filteredSpaces.length === 0" class="text-center py-12 bg-white rounded-xl border border-gray-100 shadow-sm" style="display: none;">
-                <i class="fa-solid fa-magnifying-glass text-4xl text-gray-300 mb-4"></i>
-                <h3 class="text-lg font-medium text-gray-900">No spaces found</h3>
-                <p class="text-gray-500 mt-1">Try adjusting your search or filters.</p>
-                <button @click="searchQuery = ''; selectedAmenities = []; priceFilter = ''" class="mt-4 text-brand font-medium hover:underline">Clear all filters</button>
+            <div x-show="!isLoading && filteredSpaces.length === 0" x-cloak class="text-center py-24 bg-white rounded-3xl border border-slate-200/60 shadow-sm">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-building-circle-xmark text-3xl text-slate-300"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">No spaces found</h3>
+                <p class="text-slate-500 max-w-md mx-auto mb-6">We couldn't find any locations matching your exact criteria. Try broadening your search or clearing filters.</p>
+                <button @click="resetFilters()" class="bg-slate-900 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-slate-800 transition">Clear Filters</button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                <template x-for="space in filteredSpaces" :key="space.id">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition cursor-pointer group flex flex-col">
-                        <div class="h-48 overflow-hidden relative">
-                            <img :src="space.image" :alt="space.name" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            <div class="absolute top-3 right-3 bg-white px-2 py-1 rounded text-xs font-bold text-gray-800 shadow-sm" x-text="space.priceRange"></div>
-                        </div>
-                        <div class="p-5 flex flex-col flex-grow">
-                            <div class="text-xs text-brand font-semibold mb-1" x-text="space.neighborhood"></div>
-                            <h3 class="font-bold text-lg mb-1 leading-tight text-gray-900" x-text="space.name"></h3>
-                            <p class="text-sm text-gray-500 mb-4 flex items-center gap-1">
-                                <i class="fa-solid fa-star text-yellow-400 text-xs"></i>
-                                <span x-text="space.rating"></span> (<span x-text="space.reviews"></span> reviews)
-                            </p>
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" x-show="!isLoading">
+                <template x-for="space in paginatedSpaces" :key="space.id">
+                    <div class="bg-white rounded-3xl border border-slate-200/60 overflow-hidden card-hover flex flex-col group relative">
+                        <!-- Image Container -->
+                        <div class="h-56 overflow-hidden relative">
+                            <img :src="space.image" :alt="space.name" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 ease-out">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-slate-900/0"></div>
                             
-                            <div class="flex flex-wrap gap-1 mb-4 mt-auto">
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-xs font-bold text-slate-900 shadow-sm flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-yellow-400"></i> <span x-text="space.rating"></span>
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-white shadow-sm" x-text="space.priceRange === '$' ? '$$' : (space.priceRange === '$$' ? '$$$' : '$$$$')"></span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="text-sm text-white/90 font-semibold mb-0.5 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-location-dot text-brand-400"></i> <span x-text="space.neighborhood" class="truncate"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-extrabold text-xl mb-3 text-slate-900 line-clamp-1" x-text="space.name"></h3>
+                            
+                            <!-- Tags -->
+                            <div class="flex flex-wrap gap-1.5 mb-6">
                                 <template x-for="amenity in space.amenities.slice(0, 3)">
-                                    <span class="bg-gray-100 text-gray-600 text-[10px] uppercase font-semibold px-2 py-1 rounded" x-text="amenity"></span>
+                                    <span class="bg-slate-50 border border-slate-100 text-slate-600 text-[11px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-md" x-text="amenity"></span>
                                 </template>
-                                <span x-show="space.amenities.length > 3" class="bg-gray-100 text-gray-600 text-[10px] uppercase font-semibold px-2 py-1 rounded" x-text="'+' + (space.amenities.length - 3)"></span>
+                                <span x-show="space.amenities.length > 3" class="bg-slate-50 border border-slate-100 text-slate-500 text-[11px] font-bold px-2.5 py-1 rounded-md" x-text="'+' + (space.amenities.length - 3)"></span>
                             </div>
                             
-                            <div class="border-t border-gray-100 pt-3 mt-auto flex justify-between items-center">
-                                <div class="text-sm text-gray-500"><span class="font-bold text-gray-900" x-text="'$' + space.startingPrice"></span> /mo</div>
-                                <button class="text-brand text-sm font-medium hover:underline">View Details <i class="fa-solid fa-arrow-right text-xs ml-1"></i></button>
+                            <!-- Footer -->
+                            <div class="border-t border-slate-100 pt-4 mt-auto flex justify-between items-center">
+                                <div>
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-0.5">Starting at</span>
+                                    <div class="font-extrabold text-slate-900"><span x-text="'$' + space.startingPrice"></span><span class="text-sm font-medium text-slate-500">/mo</span></div>
+                                </div>
+                                <button class="w-10 h-10 rounded-full bg-slate-50 text-slate-900 flex items-center justify-center hover:bg-slate-900 hover:text-white transition group/btn">
+                                    <i class="fa-solid fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </template>
             </div>
+
+            <!-- Pagination Controls -->
+            <div class="mt-12 flex items-center justify-between border-t border-slate-200/60 pt-6" x-show="!isLoading && totalPages > 1" x-cloak>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">
+                            Showing page <span class="font-bold text-slate-900" x-text="currentPage"></span> of <span class="font-bold text-slate-900" x-text="totalPages"></span>
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-xl shadow-sm -space-x-px bg-white p-1 border border-slate-200" aria-label="Pagination">
+                            <button @click="prevPage()" :disabled="currentPage === 1" class="relative inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                <i class="fa-solid fa-chevron-left text-xs"></i>
+                            </button>
+                            
+                            <template x-for="page in pageNumbers" :key="page">
+                                <button @click="goToPage(page)" 
+                                        :class="currentPage === page ? 'bg-slate-900 text-white shadow' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'"
+                                        class="relative inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold transition mx-0.5">
+                                    <span x-text="page"></span>
+                                </button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages" class="relative inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+                
+                <!-- Mobile Pagination -->
+                <div class="flex items-center justify-between w-full sm:hidden">
+                    <button @click="prevPage()" :disabled="currentPage === 1" class="px-4 py-2 border border-slate-300 text-sm font-medium rounded-xl text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-50">Previous</button>
+                    <span class="text-sm font-bold text-slate-700" x-text="currentPage + ' / ' + totalPages"></span>
+                    <button @click="nextPage()" :disabled="currentPage === totalPages" class="px-4 py-2 border border-slate-300 text-sm font-medium rounded-xl text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-50">Next</button>
+                </div>
+            </div>
+
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex items-center justify-center gap-2 mb-4">
-                <i class="fa-solid fa-layer-group text-brand text-2xl"></i>
-                <span class="font-bold text-xl tracking-tight">DeskNear</span>
+    <!-- Sleek Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-layer-group text-white text-sm"></i>
+                    </div>
+                    <span class="font-extrabold text-xl tracking-tight text-white">DeskNear<span class="text-brand-500">.</span></span>
+                </div>
+                <div class="flex gap-8 text-sm font-semibold">
+                    <a href="#" class="hover:text-white transition">About</a>
+                    <a href="#" class="hover:text-white transition">Terms</a>
+                    <a href="#" class="hover:text-white transition">Privacy</a>
+                    <a href="#" class="hover:text-white transition">Contact</a>
+                </div>
             </div>
-            <p class="text-gray-400 text-sm mb-6">Connecting professionals with the perfect workspaces.</p>
-            <div class="text-gray-500 text-sm">&copy; 2026 DeskNear Directory. Built for coworking.</div>
+            <div class="mt-8 pt-8 border-t border-slate-800 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 DeskNear Directory. Designed for the future of work.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="text-slate-500 hover:text-white transition"><i class="fa-brands fa-twitter text-lg"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-white transition"><i class="fa-brands fa-linkedin text-lg"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
-        function coworkingDirectory() {
+        function directoryApp() {
             return {
                 searchQuery: '',
                 selectedAmenities: [],
                 priceFilter: '',
                 spaces: [],
                 isLoading: true,
+                
+                // Pagination state
+                currentPage: 1,
+                itemsPerPage: 12,
+                
+                // Global filters
+                availableAmenities: ['24/7 Access', 'Meeting Rooms', 'Coffee', 'Phone Booths', 'Gym', 'Parking', 'Events', 'Showers', 'Outdoor Space', 'Bike Storage'],
+
                 init() {
+                    // Reset to page 1 when filters change
+                    this.$watch('searchQuery', () => this.currentPage = 1);
+                    this.$watch('selectedAmenities', () => this.currentPage = 1);
+                    this.$watch('priceFilter', () => this.currentPage = 1);
+
+                    // Fetch data
                     fetch('./spaces.json')
                         .then(res => res.json())
                         .then(data => {
@@ -174,21 +312,83 @@
                             this.isLoading = false;
                         });
                 },
+
+                get hasActiveFilters() {
+                    return this.searchQuery !== '' || this.selectedAmenities.length > 0 || this.priceFilter !== '';
+                },
+
+                resetFilters() {
+                    this.searchQuery = '';
+                    this.selectedAmenities = [];
+                    this.priceFilter = '';
+                    this.currentPage = 1;
+                },
+
                 get filteredSpaces() {
                     return this.spaces.filter(space => {
-                        // Search filter
-                        const matchesSearch = space.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-                                            space.neighborhood.toLowerCase().includes(this.searchQuery.toLowerCase());
+                        // Safe lowercase checks
+                        const q = this.searchQuery.toLowerCase();
+                        const sName = (space.name || '').toLowerCase();
+                        const sLoc = (space.neighborhood || '').toLowerCase();
                         
-                        // Amenities filter
+                        const matchesSearch = sName.includes(q) || sLoc.includes(q);
+                        
                         const matchesAmenities = this.selectedAmenities.length === 0 || 
-                            this.selectedAmenities.every(amenity => space.amenities.includes(amenity));
+                            this.selectedAmenities.every(amenity => (space.amenities || []).includes(amenity));
                         
-                        // Price filter
                         const matchesPrice = this.priceFilter === '' || space.priceRange === this.priceFilter;
 
                         return matchesSearch && matchesAmenities && matchesPrice;
                     });
+                },
+
+                // Pagination getters
+                get totalPages() {
+                    return Math.ceil(this.filteredSpaces.length / this.itemsPerPage) || 1;
+                },
+
+                get paginatedSpaces() {
+                    const start = (this.currentPage - 1) * this.itemsPerPage;
+                    const end = start + this.itemsPerPage;
+                    return this.filteredSpaces.slice(start, end);
+                },
+
+                get pageNumbers() {
+                    let pages = [];
+                    let startPage = Math.max(1, this.currentPage - 2);
+                    let endPage = Math.min(this.totalPages, this.currentPage + 2);
+                    
+                    // Adjust if near edges to always show 5 buttons if possible
+                    if (endPage - startPage < 4) {
+                        if (startPage === 1) {
+                            endPage = Math.min(this.totalPages, 5);
+                        } else if (endPage === this.totalPages) {
+                            startPage = Math.max(1, this.totalPages - 4);
+                        }
+                    }
+
+                    for (let i = startPage; i <= endPage; i++) {
+                        pages.push(i);
+                    }
+                    return pages;
+                },
+
+                // Pagination actions
+                nextPage() {
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                },
+                prevPage() {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                },
+                goToPage(page) {
+                    this.currentPage = page;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }
         }
