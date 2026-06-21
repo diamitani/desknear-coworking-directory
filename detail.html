@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeskNear | Space Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        [x-cloak] { display: none !important; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50:'#f0fdfa',100:'#ccfbf1',500:'#14b8a6',600:'#0d9488',900:'#134e4a',950:'#042f2e' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased" x-data="detailPage()">
+    
+    <!-- Nav -->
+    <nav class="glass-nav fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-layer-group text-white text-xl"></i></div>
+                    <span class="font-extrabold text-2xl tracking-tight text-slate-900">DeskNear<span class="text-brand-500">.</span></span>
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Locations</a>
+                    <a href="/enterprise.html" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">For Enterprise</a>
+                    <a href="/pricing.html" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Pricing</a>
+                </div>
+                <a href="/pricing.html" class="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-md">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading -->
+    <div x-show="isLoading" x-cloak class="pt-32 text-center">
+        <div class="w-12 h-12 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mx-auto"></div>
+        <p class="mt-4 text-slate-500 font-medium">Loading space details...</p>
+    </div>
+
+    <!-- Error -->
+    <div x-show="error" x-cloak class="pt-32 text-center max-w-lg mx-auto px-4">
+        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-slate-200">
+            <i class="fa-solid fa-circle-exclamation text-3xl text-slate-300"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 mb-3">Space Not Found</h2>
+        <p class="text-slate-500 mb-8" x-text="error"></p>
+        <a href="/" class="bg-slate-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-slate-800 transition">Back to Directory</a>
+    </div>
+
+    <!-- Detail Content -->
+    <div x-show="space && !isLoading" x-cloak class="pt-28 pb-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Breadcrumb -->
+            <div class="mb-6 text-sm text-slate-400 font-medium">
+                <a href="/" class="hover:text-brand-500 transition">Directory</a>
+                <i class="fa-solid fa-chevron-right text-[10px] mx-2"></i>
+                <a :href="'/?state=' + space.state" class="hover:text-brand-500 transition" x-text="space.state"></a>
+                <i class="fa-solid fa-chevron-right text-[10px] mx-2"></i>
+                <span class="text-slate-600" x-text="space.name"></span>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="rounded-3xl overflow-hidden h-80 md:h-96 mb-10 relative">
+                <img :src="space.image" :alt="space.name" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent"></div>
+                <div class="absolute bottom-8 left-8 right-8">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg text-sm font-bold text-slate-900 flex items-center gap-1">
+                            <i class="fa-solid fa-star text-yellow-400"></i> <span x-text="space.rating"></span>
+                        </span>
+                        <span class="text-white/80 text-sm font-medium" x-text="space.reviews + ' reviews'"></span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2" x-text="space.name"></h1>
+                    <div class="flex items-center gap-2 text-white/80">
+                        <i class="fa-solid fa-location-dot text-brand-400"></i>
+                        <span class="font-semibold" x-text="space.city + ', ' + space.state"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-10">
+                    <!-- Overview -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200/60">
+                        <h2 class="text-xl font-bold mb-4">About This Space</h2>
+                        <p class="text-slate-600 leading-relaxed">
+                            Welcome to <strong x-text="space.name"></strong>, a premier coworking destination in 
+                            <span x-text="space.city + ', ' + space.state"></span>. 
+                            This workspace offers a curated environment for professionals, entrepreneurs, and remote teams 
+                            looking for a productive and inspiring place to work.
+                        </p>
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            <template x-for="amenity in space.amenities">
+                                <span class="bg-brand-50 text-brand-900 text-xs font-bold px-3 py-1.5 rounded-lg border border-brand-100" x-text="amenity"></span>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Amenities -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200/60">
+                        <h2 class="text-xl font-bold mb-6">Amenities & Features</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <template x-for="amenity in space.amenities">
+                                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-slate-100">
+                                        <i class="fa-solid fa-check text-brand-500"></i>
+                                    </div>
+                                    <span class="text-sm font-semibold text-slate-700" x-text="amenity"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Price Card -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200/60 sticky top-28">
+                        <div class="mb-6">
+                            <span class="text-3xl font-extrabold text-slate-900" x-text="'$' + space.startingPrice"></span>
+                            <span class="text-slate-500 font-medium">/month</span>
+                        </div>
+                        <button class="w-full bg-slate-900 text-white py-3.5 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg mb-3">
+                            Book This Space
+                        </button>
+                        <button class="w-full border-2 border-slate-200 text-slate-700 py-3.5 rounded-xl font-bold hover:border-slate-900 transition">
+                            Schedule Tour
+                        </button>
+                        
+                        <div class="mt-8 pt-6 border-t border-slate-100 space-y-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Price Tier</span>
+                                <span class="font-bold" x-text="space.priceRange === '$' ? 'Budget' : (space.priceRange === '$$' ? 'Mid-Range' : 'Premium')"></span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Reviews</span>
+                                <span class="font-bold" x-text="space.reviews + ' total'"></span>
+                            </div>
+                            <div class="flex justify-between text-sm" x-show="space.website">
+                                <span class="text-slate-500">Website</span>
+                                <a :href="space.website" target="_blank" class="text-brand-600 font-bold hover:underline truncate max-w-[150px]" x-text="space.website.replace('https://', '').replace('http://', '').split('/')[0]"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Spaces -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-8">Similar Spaces Nearby</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <template x-for="related in relatedSpaces.slice(0, 3)" :key="related.id">
+                        <a :href="'/detail.html?id=' + related.id" class="bg-white rounded-2xl border border-slate-200/60 overflow-hidden hover:shadow-md transition group">
+                            <div class="h-40 overflow-hidden">
+                                <img :src="related.image" :alt="related.name" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-bold text-slate-900 mb-1" x-text="related.name"></h3>
+                                <p class="text-sm text-slate-500" x-text="related.city + ', ' + related.state"></p>
+                                <div class="mt-2 text-sm font-bold text-slate-900" x-text="'$' + related.startingPrice + '/mo'"></div>
+                            </div>
+                        </a>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center"><i class="fa-solid fa-layer-group text-white text-sm"></i></div>
+                <span class="font-extrabold text-xl text-white">DeskNear<span class="text-brand-500">.</span></span>
+            </div>
+            <p class="text-sm">&copy; 2026 DeskNear. Find your perfect workspace.</p>
+        </div>
+    </footer>
+
+    <script>
+        function detailPage() {
+            return {
+                space: null,
+                relatedSpaces: [],
+                isLoading: true,
+                error: null,
+                
+                async init() {
+                    const params = new URLSearchParams(window.location.search);
+                    const id = params.get('id');
+                    
+                    if (!id) {
+                        this.error = 'No space ID provided.';
+                        this.isLoading = false;
+                        return;
+                    }
+
+                    try {
+                        // Try API first
+                        const res = await fetch(`http://localhost:3001/api/spaces/${id}`);
+                        if (res.ok) {
+                            this.space = await res.json();
+                            document.title = `${this.space.name} | DeskNear`;
+                            const relatedRes = await fetch(`http://localhost:3001/api/states/${encodeURIComponent(this.space.state)}`);
+                            if (relatedRes.ok) {
+                                const data = await relatedRes.json();
+                                this.relatedSpaces = (data.spaces || []).filter(s => s.id !== this.space.id);
+                            }
+                        } else {
+                            throw new Error('API not available');
+                        }
+                    } catch (apiErr) {
+                        // Fall back to spaces.json
+                        try {
+                            const res = await fetch('./spaces.json');
+                            const spaces = await res.json();
+                            this.space = spaces.find(s => s.id == id);
+                            if (!this.space) throw new Error('Space not found in local data');
+                            document.title = `${this.space.name} | DeskNear`;
+                            // Related: same state
+                            this.relatedSpaces = spaces.filter(s => s.state === this.space.state && s.id !== this.space.id);
+                        } catch (localErr) {
+                            this.error = 'This workspace could not be found. It may have been removed or the link is invalid.';
+                        }
+                    } finally {
+                        this.isLoading = false;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeskNear Pricing | Plans for Teams of All Sizes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');body{font-family:'Plus Jakarta Sans',sans-serif}.glass-nav{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.05)}.hero-gradient{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%)}</style>
+    <script>tailwind.config={theme:{extend:{colors:{brand:{50:'#f0fdfa',100:'#ccfbf1',500:'#14b8a6',600:'#0d9488',900:'#134e4a'}}}}}</script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+<!-- Nav -->
+<nav class="glass-nav fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+            <a href="/" class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-layer-group text-white text-xl"></i></div>
+                <span class="font-extrabold text-2xl tracking-tight text-slate-900">DeskNear<span class="text-brand-500">.</span></span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Locations</a>
+                <a href="/enterprise.html" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">For Enterprise</a>
+                <a href="/pricing.html" class="text-sm font-semibold text-slate-900 transition border-b-2 border-brand-500 pb-1">Pricing</a>
+            </div>
+            <a href="#plans" class="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-md">View Plans</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero-gradient pt-40 pb-24 px-4 text-center text-white relative overflow-hidden">
+    <div class="relative z-10 max-w-3xl mx-auto">
+        <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-bold tracking-wide text-brand-100 mb-6 uppercase">Simple Pricing</span>
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">One price. All spaces.</h1>
+        <p class="text-xl text-slate-300 mb-4 max-w-xl mx-auto font-medium">No hidden fees. No per-desk contracts. Just unlimited access to thousands of coworking spaces worldwide.</p>
+    </div>
+</div>
+
+<!-- Plans -->
+<div id="plans" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Starter -->
+        <div class="bg-white rounded-3xl border border-slate-200/60 shadow-sm p-8">
+            <h3 class="text-lg font-bold mb-2">Starter</h3>
+            <p class="text-slate-500 text-sm mb-6">For freelancers and solopreneurs.</p>
+            <div class="mb-6"><span class="text-5xl font-extrabold text-slate-900">$29</span><span class="text-slate-500">/mo</span></div>
+            <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> 5 days/month access</li>
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> 1 city</li>
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> Basic amenities</li>
+            </ul>
+            <button class="w-full py-3 border-2 border-slate-900 text-slate-900 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition">Get Started</button>
+        </div>
+
+        <!-- Pro (Featured) -->
+        <div class="bg-slate-900 rounded-3xl shadow-xl p-8 text-white scale-105 relative">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-4 py-1 rounded-full uppercase">Most Popular</div>
+            <h3 class="text-lg font-bold mb-2">Pro</h3>
+            <p class="text-slate-400 text-sm mb-6">For growing teams and remote workers.</p>
+            <div class="mb-6"><span class="text-5xl font-extrabold text-white">$99</span><span class="text-slate-400">/mo</span></div>
+            <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-2 text-sm text-slate-300"><i class="fa-solid fa-check text-brand-500"></i> Unlimited access</li>
+                <li class="flex items-center gap-2 text-sm text-slate-300"><i class="fa-solid fa-check text-brand-500"></i> 50+ cities</li>
+                <li class="flex items-center gap-2 text-sm text-slate-300"><i class="fa-solid fa-check text-brand-500"></i> Premium amenities</li>
+                <li class="flex items-center gap-2 text-sm text-slate-300"><i class="fa-solid fa-check text-brand-500"></i> Meeting room credits</li>
+                <li class="flex items-center gap-2 text-sm text-slate-300"><i class="fa-solid fa-check text-brand-500"></i> Priority support</li>
+            </ul>
+            <button class="w-full py-3 bg-brand-500 text-white rounded-xl font-bold hover:bg-brand-600 transition shadow-lg">Get Started</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="bg-white rounded-3xl border border-slate-200/60 shadow-sm p-8">
+            <h3 class="text-lg font-bold mb-2">Enterprise</h3>
+            <p class="text-slate-500 text-sm mb-6">For companies with 50+ employees.</p>
+            <div class="mb-6"><span class="text-5xl font-extrabold text-slate-900">Custom</span></div>
+            <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> Everything in Pro</li>
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> Custom locations</li>
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> SAML SSO</li>
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> Dedicated account manager</li>
+                <li class="flex items-center gap-2 text-sm text-slate-600"><i class="fa-solid fa-check text-brand-500"></i> SLA guarantee</li>
+            </ul>
+            <button class="w-full py-3 border-2 border-slate-900 text-slate-900 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition">Contact Sales</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-slate-950 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center"><i class="fa-solid fa-layer-group text-white text-sm"></i></div>
+            <span class="font-extrabold text-xl text-white">DeskNear<span class="text-brand-500">.</span></span>
+        </div>
+        <p class="text-sm">&copy; 2026 DeskNear. Simple pricing, serious workspaces.</p>
+    </div>
+</footer>
+
+</body>
+</html>
