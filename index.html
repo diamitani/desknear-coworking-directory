@@ -50,8 +50,8 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="#" class="text-sm font-semibold text-slate-900 transition border-b-2 border-brand-500 pb-1">Locations</a>
-                    <a href="/enterprise.html" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">For Enterprise</a>
-                    <a href="/pricing.html" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Pricing</a>
+                    <a href="/enterprise" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">For Enterprise</a>
+                    <a href="/pricing" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Pricing</a>
                 </div>
                 <div>
                     <button class="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-md shadow-slate-900/20">
@@ -202,7 +202,7 @@
                                     <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-0.5">Starting at</span>
                                     <div class="font-extrabold text-slate-900"><span x-text="'$' + space.startingPrice"></span><span class="text-sm font-medium text-slate-500">/mo</span></div>
                                 </div>
-                                <a :href="'/detail.html?id=' + space.id" @click.stop class="w-10 h-10 rounded-full bg-slate-50 text-slate-900 flex items-center justify-center hover:bg-slate-900 hover:text-white transition group/btn">
+                                <a :href="'/detail?id=' + space.id" @click.stop class="w-10 h-10 rounded-full bg-slate-50 text-slate-900 flex items-center justify-center hover:bg-slate-900 hover:text-white transition group/btn">
                                     <i class="fa-solid fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300"></i>
                                 </a>
                             </div>
@@ -391,7 +391,7 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 },
                 viewSpace(id) {
-                    window.location.href = `/detail.html?id=${id}`;
+                    window.location.href = `/detail?id=${id}`;
                 }
             }
         }
